@@ -2,14 +2,19 @@ package com.example.finaltestjv_vti.Service.impl;
 
 import com.example.finaltestjv_vti.Exception.AppException;
 import com.example.finaltestjv_vti.Exception.ErrorResponseBase;
+import com.example.finaltestjv_vti.Repository.Specification.ZoomSpecification;
 import com.example.finaltestjv_vti.Repository.ZoomRepository;
 import com.example.finaltestjv_vti.Service.IZoomService;
 import com.example.finaltestjv_vti.modal.Entity.Zoom;
 import com.example.finaltestjv_vti.modal.Request.CreateZoomReq;
+import com.example.finaltestjv_vti.modal.Request.SearchZoomReq;
 import com.example.finaltestjv_vti.modal.Request.UpdateZoomReq;
+import com.example.finaltestjv_vti.modal.dto.BaseReq;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +43,10 @@ public class ZoomService implements IZoomService {
     }
 
     @Override
-    public Page<Zoom> search() {
-        return null;
+    public Page<Zoom> search(SearchZoomReq req) {
+        Specification<Zoom> zoomSpecification = ZoomSpecification.buildCondition(req);
+        PageRequest pageRequest = BaseReq.buildPageReq(req);
+        return repository.findAll(zoomSpecification, pageRequest);
     }
 
     @Override

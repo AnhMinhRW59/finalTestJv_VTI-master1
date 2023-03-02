@@ -3,8 +3,10 @@ package com.example.finaltestjv_vti.Controller;
 import com.example.finaltestjv_vti.Service.impl.ZoomService;
 import com.example.finaltestjv_vti.modal.Entity.Zoom;
 import com.example.finaltestjv_vti.modal.Request.CreateZoomReq;
+import com.example.finaltestjv_vti.modal.Request.SearchZoomReq;
 import com.example.finaltestjv_vti.modal.Request.UpdateZoomReq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,5 +42,11 @@ public class ZoomController {
     @PutMapping("/update/{id}")
     Zoom update(@PathVariable int id, @RequestBody UpdateZoomReq req){
         return service.update(id, req);
+    }
+
+
+    @PostMapping("/search")
+    Page<Zoom> search(@RequestBody  SearchZoomReq req){
+        return service.search(req);
     }
 }

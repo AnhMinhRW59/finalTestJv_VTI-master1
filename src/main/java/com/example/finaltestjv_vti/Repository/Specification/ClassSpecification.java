@@ -15,10 +15,10 @@ public class ClassSpecification {
                 .and(searchByStartDate(req.getStartDate()))
                 .and(searchByEndDate(req.getEndDate()))
                 .and(searchByMentorId(req.getMentorId()))
-                .and(seachByClassroomId(req.getClassRoomId()))
+                .and(searchByClassroomId(req.getClassRoomId()))
                 .and(searchByZoomId(req.getZoomId()))
-                .and(seachBySchedule(req.getSchedule()))
-                .and(seachByClassStatus(req.getClassStatus()))
+                .and(searchBySchedule(req.getSchedule()))
+                .and(searchByClassStatus(req.getClassStatus()))
                 .and(searchByTeachingForm(req.getTeachingForm()));
     }
 
@@ -35,7 +35,7 @@ public class ClassSpecification {
     private static Specification<Class> searchByStartDate(Date startDate){
                 if (startDate != null){
         return ((root, query, criteriaBuilder) -> {
-            return criteriaBuilder.equal(root.get("startDate"), "%" + startDate + "%");
+            return criteriaBuilder.lessThanOrEqualTo(root.get("startDate"), "%" + startDate + "%");
         });
     }else {
         return null;
@@ -45,7 +45,7 @@ public class ClassSpecification {
         // So sanh ngay ko dung like, dung greater, ...
         if (endDate != null){
         return ((root, query, criteriaBuilder) -> {
-        return criteriaBuilder.like(root.get("endDate"), "%" + endDate + "%");
+        return criteriaBuilder.greaterThanOrEqualTo(root.get("endDate"), "%" + endDate + "%");
         });
         }else {
         return null;
@@ -76,7 +76,7 @@ public class ClassSpecification {
         }
     }
 
-    private static Specification<Class> seachByClassroomId(int classRoomId){
+    private static Specification<Class> searchByClassroomId(int classRoomId){
         if (classRoomId > 0) {
             // Kieemr tra dieu kien tim kiem (Su dung root -> join)
             return ((root, query, criteriaBuilder) -> {
@@ -88,7 +88,7 @@ public class ClassSpecification {
         }
     }
 
-    private static Specification<Class> seachBySchedule(String schedule){
+    private static Specification<Class> searchBySchedule(String schedule){
         if (schedule != null){
         return ((root, query, criteriaBuilder) -> {
         return criteriaBuilder.like(root.get("schedule"), "%" + schedule + "%");
@@ -98,7 +98,7 @@ public class ClassSpecification {
         }
         };
 
-    private static Specification<Class> seachByClassStatus(ClassStatus classStatus){
+    private static Specification<Class> searchByClassStatus(ClassStatus classStatus){
         if (classStatus != null){
         return ((root, query, criteriaBuilder) -> {
         return criteriaBuilder.equal(root.get("classStatus"),  classStatus );

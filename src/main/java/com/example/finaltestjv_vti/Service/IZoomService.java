@@ -2,6 +2,7 @@ package com.example.finaltestjv_vti.Service;
 
 import com.example.finaltestjv_vti.modal.Entity.Zoom;
 import com.example.finaltestjv_vti.modal.Request.CreateZoomReq;
+import com.example.finaltestjv_vti.modal.Request.SearchZoomReq;
 import com.example.finaltestjv_vti.modal.Request.UpdateZoomReq;
 import org.springframework.data.domain.Page;
 
@@ -12,7 +13,7 @@ public interface IZoomService {
 
     Zoom getById(int id);
 
-    Page<Zoom> search();
+    Page<Zoom> search(SearchZoomReq req);
 
     Zoom update();
 
